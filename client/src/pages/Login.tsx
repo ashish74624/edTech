@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom'
 import {z} from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
-import SideBg from '../components/Login/SideBg';
+import SideBg from '../components/Auth/SideBg';
 
 const schema = z.object({
     email: z.string().email(),
@@ -23,7 +23,7 @@ export default function Login() {
 
   return (
      <main className=' h-screen w-screen overflow-x-hidden overflow-y-auto font-mono grid grid-cols-2 bg-zinc-900 text-white'>
-        <SideBg/>
+        <SideBg heading='Great to see you again !' text='Log in to continue where you left off' />
         {/* Form */}
         <section className=' h-[80vh] xl:h-screen w-screen xl:w-[50vw] flex flex-col justify-center items-center xl:grid xl:place-content-center bg-zinc-900'>
         <div className=" flex xl:hidden items-center w-full flex-col mb-4">
