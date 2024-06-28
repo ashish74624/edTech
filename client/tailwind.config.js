@@ -12,6 +12,9 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      colors:{
+        teal:"#14b8a6"
+      },
       animation: {
         aurora: "aurora 60s linear infinite",
         "meteor-effect": "meteor 5s linear infinite",
