@@ -1,5 +1,5 @@
-import Student from '../models/Student'
-import Teacher from '../models/Teacher'
+import Student from '../models/Student.js'
+import Teacher from '../models/Teacher.js'
 import bcrypt from 'bcrypt'
 
 const login = async(req,res) =>{
