@@ -1,8 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
+import AuthRouter from './Routes/AuthRoute'
+
 
 const app = express();
 app.use(express.json());
+
+app.use('/api',AuthRouter);
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{

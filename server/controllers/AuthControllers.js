@@ -27,8 +27,37 @@ const login = async(req,res) =>{
         return res.status(200).json({message:"Teacher Login Succesful",userData:teacher,userType:"TEACHER"})
 
     } catch (error) {
-        
+        return res.status(500).json({message:"Unable to login at the moment"});
     }
 }
 
-export { login }
+const register = async(req,res)=>{
+    try {
+        const newPassword = await bcrypt.hash(req.body.password,10);
+        const userType = req.body.userType;
+        if(userType==='TEACHER'){
+            const teacher = await Teacher.create({
+                firstName:req.body.firstName,
+                lastName: req.body.lastName,
+                email:req.body.email,
+                password: newPassword,  
+            })
+            await teacher.save();
+            return res.status(201).json({message:"Teacher account created",userData:teacher});
+        }
+        
+        const student = await Student.create({
+            firstName:req.body.firstName,
+            lastName: req.body.lastName,
+            email:req.body.email,
+            password: newPassword
+        })
+        await student.save();
+        return res.status(201).json({message:"Student account created",userData:student});
+        
+    } catch (error) {
+        return res.status(500).json({message:"Unable to register at the moment"});
+    }
+}
+
+export { login, register }
