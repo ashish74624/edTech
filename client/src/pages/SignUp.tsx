@@ -1,7 +1,13 @@
+import React, { useState } from 'react';
 import SideBg from '../components/Auth/SideBg';
 import { Link } from 'react-router-dom';
 export default function SignUp() {
   const isDiabled = false;
+  const [selectedValue,setSelectedValue] = useState('');
+
+  const handleRadioChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    setSelectedValue(e.target.value);
+  }
 
   return (
     <main className='dark h-screen w-screen overflow-x-hidden overflow-y-auto grid grid-cols-2 bg-zinc-900'>
@@ -34,8 +40,13 @@ export default function SignUp() {
               <label htmlFor="floating_password" className="label-base dark-label">Password</label>
             </div>
 
-            <div className="relative z-0 w-full mb-3 md:mb-6 group">
+            <div className="relative z-0 w-full  mb-3 md:mb-6 group text-white">
+              <p>Join As :</p>
+              <div className="space-y-2 mt-2">
+                <CustomInput value='TEACHER' onChange={(e)=>{handleRadioChange(e)}} id='teacher' htmlFor='teacher' isSelected={selectedValue==='TEACHER'} text='Teacher' />
 
+                <CustomInput value='STUDENT' onChange={(e)=>{handleRadioChange(e)}} id='student' htmlFor='student' isSelected={selectedValue==='STUDENT'} text='Student' />
+              </div>
             </div>
             <button
               disabled={isDiabled}
@@ -49,4 +60,22 @@ export default function SignUp() {
       </section>
     </main>
   );
+}
+
+interface customInputProps{
+  id:string,
+  value:string,
+  onChange: React.ChangeEventHandler<HTMLInputElement> ,
+  isSelected:boolean,
+  text:string,
+  htmlFor:string
+}
+
+const CustomInput = ({value,onChange,isSelected,text,htmlFor,id}:customInputProps)=>{
+  return (
+    <label className={`flex justify-center border ${isSelected?'border-teal':'border-white'}  py-2 rounded-md`} htmlFor={htmlFor}>
+      <input className=' hidden' onChange={onChange} name="userType" id={id} value={value} type="radio" />
+      <p>{text}</p>
+    </label>
+  )
 }
