@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
 import SideBg from '../components/Auth/SideBg';
+import { useNavigate } from 'react-router-dom';
 
 const schema = z.object({
     email: z.string().email(),
@@ -14,6 +15,8 @@ type FormField = z.infer<typeof schema>;
 const backend = import.meta.env.VITE_BACKEND;
 
 export default function Login() {
+
+  const navigate = useNavigate();
 
     const { handleSubmit, register } = useForm<FormField>({
         resolver: zodResolver(schema)
@@ -30,7 +33,7 @@ export default function Login() {
             body:JSON.stringify(data)
           });
           if(res.ok){
-            console.log("ok");
+            navigate('/dashboard');
           }
         } catch  {
           console.log("Not done");
@@ -38,7 +41,7 @@ export default function Login() {
     }
 
     return (
-        <main className='h-screen w-screen overflow-x-hidden overflow-y-auto font-mono grid grid-cols-2 bg-zinc-900 text-white'>
+        <main className='page-class font-mono grid grid-cols-2  text-white'>
             <SideBg heading='Great to see you again !' text='Log in to continue where you left off' />
             {/* Form */}
             <section className='h-[80vh] xl:h-screen w-screen xl:w-[50vw] flex flex-col justify-center items-center xl:grid xl:place-content-center bg-zinc-900'>

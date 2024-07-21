@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router-dom';
 
 const schema = z.object({
   firstName: z.string(),
@@ -21,7 +22,7 @@ export default function SignUp() {
   const { register, handleSubmit, formState: { errors }, setError } = useForm<FormField>({
     resolver: zodResolver(schema)
   });
-
+  const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState('');
   const [userType,setUserType] = useState('');
 
@@ -44,7 +45,7 @@ export default function SignUp() {
         })
       });
       if (res.ok) {
-        console.log("Registration successful");
+        navigate('/login');
       } else {
         console.error("Error in registration", await res.json());
       }

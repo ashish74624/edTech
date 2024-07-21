@@ -25,4 +25,9 @@
     .dark-label {
         @apply text-gray-500 dark:text-white ;
     }
+
+    .page-class {
+        @apply h-screen w-screen overflow-x-hidden overflow-y-auto bg-zinc-900
+    }
+
 }
