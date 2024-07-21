@@ -11,14 +11,30 @@ const schema = z.object({
 
 type FormField = z.infer<typeof schema>;
 
+const backend = import.meta.env.VITE_BACKEND;
+
 export default function Login() {
 
     const { handleSubmit, register } = useForm<FormField>({
         resolver: zodResolver(schema)
     });
 
-    const onSubmit: SubmitHandler<FormField> = (data) => {
+    const onSubmit: SubmitHandler<FormField> = async(data) => {
         console.log("login working", data)
+        try {
+          const res = await fetch(`${backend}/api/login`,{
+            method:'POST',
+            headers:{
+              'Content-type':'application/json'
+            },
+            body:JSON.stringify(data)
+          });
+          if(res.ok){
+            console.log("ok");
+          }
+        } catch  {
+          console.log("Not done");
+        }
     }
 
     return (
