@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import AuthRouter from './Routes/AuthRoute.js'
+import TeacherRouter from './Routes/Teacher.js'
 import cors from 'cors'
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/api',AuthRouter);
+app.use('/api/teacher',TeacherRouter)
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
