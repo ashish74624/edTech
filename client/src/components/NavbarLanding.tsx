@@ -1,6 +1,6 @@
 
 
-export default function NavBar() {
+export default function NavBarLanding() {
   return (
     <nav className="w-screen bg-transparent py-4 shadow-md border-b border-gray-100 text-white flex justify-between px-8">
       <div>

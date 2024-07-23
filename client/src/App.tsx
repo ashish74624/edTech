@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import NavBar from "./components/Navbar";
+import NavBar from "./components/NavbarLanding";
 import { Meteors } from "./components/ui/meteors";
 import Button from "./components/Global/Button";
 

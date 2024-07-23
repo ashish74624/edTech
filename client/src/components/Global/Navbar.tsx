@@ -1,11 +1,7 @@
-import { UserData } from "../Types/types";
+import useAuth from "../hooks/useAuth";
 
-interface Props {
-  userData:UserData | null;
-  // userType:string;
-}
-
-export default function Navbar({userData}:Props) {
+export default function Navbar() {
+  const {userData} = useAuth();
   return (
     <nav className=' w-screen text-white bg-teal flex justify-between px-8 py-2'>
       <h1>LOGO</h1>
