@@ -1,7 +1,7 @@
 import Button from "../components/Global/Button";
 import Navbar from "../components/Global/Navbar";
 import { Link } from "react-router-dom";
-import useAuth from "@/components/hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 
 
 export default function Home() {

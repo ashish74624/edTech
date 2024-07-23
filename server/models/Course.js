@@ -6,7 +6,8 @@ const CourseSchema = new mongoose.Schema({
     teacher :{ type : mongoose.Schema.Types.ObjectId , ref:'Teacher', required:true },
     videos : [{type: mongoose.Schema.Types.ObjectId , ref :'Video', default :{}}],
     isFree : { type:Boolean, required:true , default : true },
-    createdAt : {type:Date, default : Date.now()}
+    createdAt : {type:Date, default : Date.now()},
+    thumbnail :{type:String }
 })
 
 const Course = mongoose.model('Course',CourseSchema);

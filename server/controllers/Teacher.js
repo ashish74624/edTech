@@ -1,17 +1,21 @@
 import Course from '../models/Course.js'
 import Teacher from '../models/Teacher.js';
+import cloudinary from '../config/cloudinary.js';
 
 const addCourse = async (req,res)=>{
     try {
-        console.log(req.body)
         const course = await Course.findOne({teacher:req.body.userId,title:req.body.title});
         if(course){
             return res.status(409).json({message:"Course with the same title already exists"});
         }
+        
+        console.log("here")
+        const result = await cloudinary.uploader.upload(req.body.image);
         const newCourse = await Course.create({
             title:req.body.title,
             description: req.body.description,
-            teacher : req.body.userId
+            teacher : req.body.userId,
+            thumbnail: result.public_id
         })
         await newCourse.save();
 
@@ -26,5 +30,7 @@ const addCourse = async (req,res)=>{
         return res.status(500).json({message:"Some Error with form submission"});
     }
 }
+
+
 
 export { addCourse }

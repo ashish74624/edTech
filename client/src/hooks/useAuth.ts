@@ -1,4 +1,4 @@
-import { UserData } from "../Types/types";
+import { UserData } from "../components/Types/types";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
