@@ -31,7 +31,8 @@ export default function Home() {
         ?
         <section className="w-[80%] mx-auto bg-black rounded-md h-[75%] border mt-10 border-white text-white flex flex-col justify-center items-center">
           <p className="text-xl">You Currently have no courses uploaded</p>
-          <Button variant="medium" text="Upload Now"/>
+          <Button variant="medium" text="Create Course"/>
+          
         </section>
         :
         <></>
