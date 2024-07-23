@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import NavBar from "./components/Navbar";
 import { Meteors } from "./components/ui/meteors";
+import Button from "./components/Global/Button";
 
 export default function App() {
   return (
@@ -16,20 +17,11 @@ export default function App() {
         </p>
         <div className="w-max flex flex-col md:flex-row gap-4 mt-4 mx-auto">
           <Link to={'/login'}>
-            <Button text="Get Started"/>
+            <Button variant='large' text="Get Started"/>
           </Link>
           {/* <Button text="Upload Course"/> */}
         </div>
       </section>
     </main>
   );
-}
-
-function Button({text}:{text:string}){
-  return (
-    <button className="w-80 py-2  rounded-full text-white font-light transition duration-200 ease-linear shadow-[0_4px_14px_0_rgba(20,184,166,0.39)] hover:shadow-[0_6px_20px_rgba(20,184,166,0.23)] hover:bg-[rgba(20,184,166,0.9)] bg-teal">
-        {text}
-      </button>
-
-  )
 }

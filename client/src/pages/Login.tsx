@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import SideBg from '../components/Auth/SideBg';
 import { useNavigate } from 'react-router-dom';
 
+
 const schema = z.object({
     email: z.string().email(),
     password: z.string()
@@ -32,7 +33,10 @@ export default function Login() {
             },
             body:JSON.stringify(data)
           });
-          if(res.ok){
+          const output = await res.json();
+          if(res.ok && output.userData ){
+            localStorage.setItem('userDataToken',JSON.stringify(output.userData))
+            localStorage.setItem('userTypeToken',output.userType)
             navigate('/dashboard');
           }
         } catch  {
