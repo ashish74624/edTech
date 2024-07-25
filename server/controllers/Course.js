@@ -32,5 +32,19 @@ const getCourseDetail = async(req,res)=>{
     }
 }
 
+const getCourseRecomendation = async(req,res)=>{
+    try {
+        const courses = await Course.find();
+        
+        if(courses.length<=0){
+            return res.status(404).json({ message:"No Courses found at the moment" });
+        }
 
-export { getCourses, getCourseDetail }
+        return res.status(200).json({message:"Courses fetched",courses:courses})
+
+    } catch {
+        return res.status(500).json({message:"Unable to fetch the Courses at the moment"});
+    }
+}
+
+export { getCourses, getCourseDetail, getCourseRecomendation }

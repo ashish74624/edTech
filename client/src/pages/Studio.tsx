@@ -9,21 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import toast, { Toaster } from 'react-hot-toast';
 import convertToBase64 from "@/utils/base64";
 import { Link } from "react-router-dom";
-
+import {Course} from "../components/Types/types";
 
 const backend = import.meta.env.VITE_BACKEND;
 
-interface Course {
-  _id: string;
-  title: string;
-  description: string;
-  teacher: string;
-  thumbnail:string;
-  videos: string[]; // assuming videos will be an array of strings (video IDs)
-  isFree: boolean;
-  createdAt: string; // ISO date string
-  __v: number;
-}
 
 const schema = z.object({
     title : z.string().min(8),

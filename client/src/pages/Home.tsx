@@ -2,6 +2,7 @@ import Button from "../components/Global/Button";
 import Navbar from "../components/Global/Navbar";
 import { Link } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
+import StudentSection from "@/components/Home/StudentSection";
 
 
 export default function Home() {
@@ -22,7 +23,7 @@ export default function Home() {
           
         </section>
         :
-        <></>
+        <StudentSection/>
       }
 
     </main>

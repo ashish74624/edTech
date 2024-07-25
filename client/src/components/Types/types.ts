@@ -7,3 +7,15 @@ export interface UserData {
     courses: string[];  
     __v: number;
 }
+
+export interface Course {
+  _id: string;
+  title: string;
+  description: string;
+  teacher: string;
+  thumbnail:string;
+  videos: string[]; // assuming videos will be an array of strings (video IDs)
+  isFree: boolean;
+  createdAt: string; // ISO date string
+  __v: number;
+}

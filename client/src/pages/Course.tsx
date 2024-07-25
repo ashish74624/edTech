@@ -1,7 +1,7 @@
 import Button from '@/components/Global/Button';
 import Navbar from '@/components/Global/Navbar'
 import { useEffect, useState, FormEvent  } from 'react';
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 
 const backend = import.meta.env.VITE_BACKEND;
@@ -118,16 +118,16 @@ export default function Course() {
             showVideoForm &&
             <form onSubmit={onSubmit} className="bg-black w-96 h-max border border-white rounded-md mx-auto flex flex-col items-center py-2 px-8" >
               <h2 className="text-lg">Course detail</h2>
-                        <div className='relative z-0 w-full mb-6 group'>
-                            <input type="file" accept="video/*" onChange={handleFileChange}  />
-                            <input type='text' name='title' onChange={(e)=>{setTitle(e.target.value)}} id='title' className='login-inputs peer' placeholder=' ' required />
-                            <label htmlFor='title' className='login-labels'>Enter Title</label>
-                        </div>
-                        <div className='relative z-0 w-full mb-6 group'>
-                            <input type='text' name='description' id='description' onChange={(e)=>{setDescription(e.target.value)}} className='login-inputs peer' placeholder=' ' required />
-                            <label htmlFor='description' className='login-labels'>Enter Description</label>
-                        </div>
-                        <Button type='submit' variant='small' text='Submit'/>
+              <div className='relative z-0 w-full mb-6 group'>
+                <input type="file" accept="video/*" onChange={handleFileChange}  />
+                <input type='text' name='title' onChange={(e)=>{setTitle(e.target.value)}} id='title' className='login-inputs peer' placeholder=' ' required />
+                <label htmlFor='title' className='login-labels'>Enter Title</label>
+              </div>
+              <div className='relative z-0 w-full mb-6 group'>
+                <input type='text' name='description' id='description' onChange={(e)=>{setDescription(e.target.value)}} className='login-inputs peer' placeholder=' ' required />
+                <label htmlFor='description' className='login-labels'>Enter Description</label>
+              </div>
+              <Button type='submit' variant='small' text='Submit'/>
             </form>
           }
           {
@@ -135,7 +135,9 @@ export default function Course() {
             videos.map((item)=>(
               <div key={item.title}>
                 <video src={item.url} />
-                {item.title}
+                <Link to={''}>
+                  {item.title}
+                </Link>
               </div>
             ))
           }
