@@ -1,7 +1,5 @@
 import Video from "../models/Video.js";
 import Course from "../models/Course.js";
-import cloudinary from "../config/cloudinary.js";
-
 
 const addVideo = async(req,res)=>{
     if (req.file) {
@@ -39,4 +37,18 @@ const getCourseVideo = async(req,res)=>{
     }
 }
 
-export { addVideo, getCourseVideo }
+const getVideo = async(req,res)=>{
+    try {
+        const video = await Video.findOne({_id:req.params.videoId});
+        if(!video){
+            return res.status(404).json({ message:"Video not found" });
+        }
+        
+        return res.status(200).json({ message:"Video details sent" , video:video })
+        
+    } catch {
+        res.status(500).json({ message: 'Error fetching video' });
+    }
+}
+
+export { addVideo, getCourseVideo, getVideo }

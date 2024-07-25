@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp.tsx'
 import Home from './pages/Home.tsx'
 import Studio from './pages/Studio.tsx'
 import Course from './pages/Course.tsx'
+import Watch from './pages/Watch.tsx'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path:'/course/:courseId',
     element:<Course/>
+  },
+  {
+    path:'/watch/:videoId',
+    element : <Watch/>
   }
 ])
 

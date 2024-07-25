@@ -3,7 +3,7 @@ import Navbar from '@/components/Global/Navbar'
 import { useEffect, useState, FormEvent  } from 'react';
 import { Link, useParams } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
-
+// import { Course } from '@/components/Types/types';
 const backend = import.meta.env.VITE_BACKEND;
 
 interface Course {
@@ -135,7 +135,7 @@ export default function Course() {
             videos.map((item)=>(
               <div key={item.title}>
                 <video src={item.url} />
-                <Link to={''}>
+                <Link to={`/watch/${item._id}`}>
                   {item.title}
                 </Link>
               </div>

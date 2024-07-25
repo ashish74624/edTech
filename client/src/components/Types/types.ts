@@ -19,3 +19,12 @@ export interface Course {
   createdAt: string; // ISO date string
   __v: number;
 }
+
+export interface Videos {
+  _id: string;
+  title: string;
+  description: string;
+  url: string;
+  course: string;
+  __v: number;
+}
