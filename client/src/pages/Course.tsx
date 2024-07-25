@@ -17,6 +17,14 @@ interface Course {
   thumbnail: string;
   __v: number;
 }
+interface Videos {
+  _id: string;
+  title: string;
+  description: string;
+  url: string;
+  course: string;
+  __v: number;
+}
 
 interface CourseResponse {
   message: string;
@@ -31,6 +39,7 @@ export default function Course() {
   const [file, setFile] = useState<File | null>(null);
   const [title,setTitle] = useState('');
   const [description,setDescription] = useState('')
+  const [videos,setVideos] = useState<Videos[] | null>(null);
 
   
 
@@ -75,7 +84,17 @@ export default function Course() {
         console.log(error)
       }
     }
+
+    const getCourseVideo = async()=>{
+      const res = await fetch(`${backend}/api/video/getCourseVideo/${params?.courseId}`);
+      const data = await res.json();
+      if(res.ok && data.videos){
+        setVideos(data.videos)
+      }
+    }
+
     void getCourseDetail();
+    void getCourseVideo();
   },[params])
 
   return (
@@ -110,6 +129,15 @@ export default function Course() {
                         </div>
                         <Button type='submit' variant='small' text='Submit'/>
             </form>
+          }
+          {
+            videos &&
+            videos.map((item)=>(
+              <div key={item.title}>
+                <video src={item.url} />
+                {item.title}
+              </div>
+            ))
           }
         </div>
       </div>

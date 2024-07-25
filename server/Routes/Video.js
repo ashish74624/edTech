@@ -1,5 +1,5 @@
 import express from 'express';
-import { addVideo } from '../controllers/Video.js';
+import { addVideo, getCourseVideo } from '../controllers/Video.js';
 import cloudinary from '../config/cloudinary.js'
 import multer from 'multer'
 import { CloudinaryStorage } from 'multer-storage-cloudinary'
@@ -26,5 +26,6 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 router.post('/addVideo', upload.single('file'), addVideo);
+router.get('/getCourseVideo/:courseId',getCourseVideo)
 
 export default router;
