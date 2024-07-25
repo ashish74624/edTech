@@ -8,6 +8,7 @@ import z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast, { Toaster } from 'react-hot-toast';
 import convertToBase64 from "@/utils/base64";
+import { Link } from "react-router-dom";
 
 
 const backend = import.meta.env.VITE_BACKEND;
@@ -123,12 +124,14 @@ export default function Studio() {
                     ?
                     <div>
                         {courses.map((item)=>(
-                            <div className="bg-blue-900 w-56 h-56 px-2 rounded-md" key={item._id}>
+                            <Link key={item._id} to={`/course/${item._id}`}>
+                            <div className="bg-blue-900 w-56 h-56 px-2 rounded-md" >
                                 <img className="w-full h-40" src={`https://res.cloudinary.com/dknsgexk8/image/upload/v1721739667/${item.thumbnail}`} alt={item.title}/>
                                 <p>
                                     {item.title}
                                 </p>
                             </div>
+                            </Link>
                         ))}
                     </div>
                     :

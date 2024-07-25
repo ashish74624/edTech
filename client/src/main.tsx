@@ -7,6 +7,7 @@ import Login from './pages/Login.tsx'
 import SignUp from './pages/SignUp.tsx'
 import Home from './pages/Home.tsx'
 import Studio from './pages/Studio.tsx'
+import Course from './pages/Course.tsx'
 
 const router = createBrowserRouter([
   {
@@ -24,9 +25,14 @@ const router = createBrowserRouter([
   {
     path:'/dashboard',
     element : <Home/>
-  },{
+  },
+  {
     path:'/studio',
     element : <Studio/>
+  },
+  {
+    path:'/course/:courseId',
+    element:<Course/>
   }
 ])
 

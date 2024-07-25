@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import AuthRouter from './Routes/AuthRoute.js'
 import TeacherRouter from './Routes/Teacher.js'
 import CourseRoute from './Routes/Course.js'
+import VideoRoute from './Routes/Video.js'
 import cors from 'cors'
 
 const app = express();
@@ -11,11 +12,13 @@ app.use(cors({
     methods:['GET','POST','PUT','DELETE'],
     credentials:true
 }))
-app.use(express.json());
+app.use(express.json({limit:'500mb'}));
+app.use(express.urlencoded({ limit: '500mb', extended: true }));
 
 app.use('/api',AuthRouter);
 app.use('/api/teacher',TeacherRouter)
 app.use('/api/course',CourseRoute)
+app.use('/api/video',VideoRoute)
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{

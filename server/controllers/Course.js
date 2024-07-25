@@ -16,4 +16,21 @@ const getCourses = async(req,res)=>{
     }
 }
 
-export { getCourses }
+const getCourseDetail = async(req,res)=>{
+    try {
+        const course = await Course.findOne({_id:req.params.courseId})
+        if(!course){
+            return res.status(404).json({message:"Course not found"})
+        }
+
+        return res.status(200).json({message:"Course Found",course : course});
+
+    } catch (error) {
+        console.log("Some error in get course details")
+        return res.status(500).json({message:"Internal Server Error"});
+        
+    }
+}
+
+
+export { getCourses, getCourseDetail }
