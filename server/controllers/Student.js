@@ -48,4 +48,16 @@ const Unsubscribe = async(req,res)=>{
     }
 }
 
-export { subscribe, Unsubscribe }
+const mySubscriptions = async(req,res)=>{
+    try {
+        const sub = await Student.findById(req.params.studentId).populate('subscriptions');
+        if(sub.length<=0){
+            return res.status(404).json({message:"No subscriptions found"});
+        }
+        return res.status(200).json({message:"Subscription found", subscriptions:sub.subscriptions});
+    } catch {
+        return res.status(500).json({message:"Can't get subscriptions at the moment"})
+    }
+}
+
+export { subscribe, Unsubscribe, mySubscriptions }
