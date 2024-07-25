@@ -4,7 +4,8 @@ export interface UserData {
     lastName: string;
     email: string;
     password: string;
-    courses: string[];  
+    courses?: string[];  
+    subscriptions?:string[];
     __v: number;
 }
 

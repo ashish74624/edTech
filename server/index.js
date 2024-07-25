@@ -4,6 +4,7 @@ import AuthRouter from './Routes/AuthRoute.js'
 import TeacherRouter from './Routes/Teacher.js'
 import CourseRoute from './Routes/Course.js'
 import VideoRoute from './Routes/Video.js'
+import StudentRoute from './Routes/Student.js'
 import cors from 'cors'
 
 const app = express();
@@ -19,6 +20,7 @@ app.use('/api',AuthRouter);
 app.use('/api/teacher',TeacherRouter)
 app.use('/api/course',CourseRoute)
 app.use('/api/video',VideoRoute)
+app.use('/api/student',StudentRoute)
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
