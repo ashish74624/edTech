@@ -3,6 +3,7 @@ import Navbar from '@/components/Global/Navbar'
 import { useEffect, useState, FormEvent  } from 'react';
 import { Link, useParams } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
+import useAuth from '@/hooks/useAuth';
 // import { Course } from '@/components/Types/types';
 const backend = import.meta.env.VITE_BACKEND;
 
@@ -33,6 +34,7 @@ interface CourseResponse {
 
 
 export default function Course() {
+  const { userType } = useAuth();
   const params = useParams<{courseId:string}>();
   const [course,setCourse] = useState<Course | null>(null);
   const [showVideoForm,setShowVideoForm] = useState(false);
@@ -107,12 +109,16 @@ export default function Course() {
           {
             course && course.videos.length>0 
             ?
-            <></>
+            <p>Here the videos of the following course</p>
             :
+            userType==="TEACHER" 
+            ?
             <div>
               Your course does not have any videos
               <Button onClick={()=>{setShowVideoForm(!showVideoForm)}} variant="medium" text='Add Videos' />
             </div>
+            :
+            <p>This course does not have any videos</p>
           }
           {
             showVideoForm &&

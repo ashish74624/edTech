@@ -5,21 +5,21 @@ import useAuth from "@/hooks/useAuth";
 
 const backend = import.meta.env.VITE_BACKEND;
 
-interface Subscription {
+interface SubscriptionTeachers {
     _id: string;
     firstName: string;
     lastName: string;
     email: string;
     password: string;
-    courses: string[];  // Array of course IDs
-    __v: number;        // Version key (typically used by Mongoose)
+    courses: string[]; 
+    __v: number;        
 }
 
 
 export default function StudentSection() {
     const { userData } = useAuth();
     const [courses,setCourses] = useState<Course[] | null >(null);
-    const [subscriptions,setSubscriptions] = useState<Subscription[] | null>(null);
+    const [subscriptions,setSubscriptions] = useState<SubscriptionTeachers[] | null>(null);
     useEffect(()=>{
         const getCourseRecomendation = async() =>{
             const res = await fetch(`${backend}/api/course/getCourseRecomendation`);
@@ -61,9 +61,9 @@ export default function StudentSection() {
             subscriptions 
             ?
             subscriptions.map((item,i)=>(
-                <div key={i}>
+                <Link to={`/teacher/${item._id}`} key={i}>
                     {item.email}
-                </div>
+                </Link>
             ))
             :
             <div>You currently have no subscriptions</div>

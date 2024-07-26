@@ -9,7 +9,6 @@ const addCourse = async (req,res)=>{
             return res.status(409).json({message:"Course with the same title already exists"});
         }
         
-        console.log("here")
         const result = await cloudinary.uploader.upload(req.body.image);
         const newCourse = await Course.create({
             title:req.body.title,
@@ -31,6 +30,19 @@ const addCourse = async (req,res)=>{
     }
 }
 
+const getTeacherData = async(req,res)=>{
+    try {
+        const teacher = await Teacher.findById(req.params.teacherId).populate('courses');
+        
+        if(!teacher){
+            return res.status(404).json({ message:"Teacher not found" });
+        }
+        return res.status(200).json({message:"Teacher found",teacher:teacher});
+    } catch (error) {
+        return res.status(500).json({message:"Teacher data can't be fetched at the moment"});
+    }
+}
 
 
-export { addCourse }
+
+export { addCourse, getTeacherData }

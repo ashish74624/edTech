@@ -9,6 +9,7 @@ import Home from './pages/Home.tsx'
 import Studio from './pages/Studio.tsx'
 import Course from './pages/Course.tsx'
 import Watch from './pages/Watch.tsx'
+import Teacher from './pages/Teacher.tsx'
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path:'/watch/:videoId',
     element : <Watch/>
+  },
+  {
+    path:'/teacher/:teacherId',
+    element : <Teacher/>
   }
 ])
 
