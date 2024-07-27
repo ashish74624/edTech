@@ -1,19 +1,30 @@
 import Navbar from '@/components/Global/Navbar';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Videos } from '@/components/Types/types';
 import Button from '@/components/Global/Button';
 import useAuth from '@/hooks/useAuth';
 
 const backend = import.meta.env.VITE_BACKEND;
 
+interface Teacher {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    courses: string[];  
+    __v: number;
+}
 
 export default function Watch() {
   const { userType, userData } =   useAuth();
   const [video,setVideo] =  useState<Videos | null >(null);
-  const [teacherId,setTeacherId] =  useState<string>('');
+  const [teacher,setTeacher] =  useState<Teacher|null>(null);
   const [isSubscribed,setIsSubscribed] = useState(false);
   const params = useParams<{videoId:string}>();
+
+
   const subscribe = async()=>{
     const res = await fetch(`${backend}/api/student/subscribe`,{
         method:'PUT',
@@ -22,7 +33,7 @@ export default function Watch() {
         },
         body: JSON.stringify({
             studentId : userData?._id,
-            teacherId: teacherId
+            teacherId: teacher?._id
         })
     })
     if(res.ok){
@@ -38,7 +49,7 @@ export default function Watch() {
         },
         body: JSON.stringify({
             studentId : userData?._id,
-            teacherId: teacherId
+            teacherId: teacher?._id
         })
     })
     if(res.ok){
@@ -52,19 +63,19 @@ export default function Watch() {
         const data = await res.json();
         if(res.ok && data.video){
             setVideo(data.video)
-            setTeacherId(data.teacherId)
+            setTeacher(data.teacherDetail)
         }
     }
     void getVideo();
 
-    if(userData?.subscriptions?.includes(teacherId)){
+    if(userData?.subscriptions?.includes(teacher?._id as string)){
         setIsSubscribed(true)
     }else{
         console.log("here")
         setIsSubscribed(false)
     }
 
-  },[params.videoId,userData,teacherId])
+  },[])
 
   return (
     <section className='page-class'>
@@ -72,11 +83,21 @@ export default function Watch() {
       {
         video && 
         <div>
-            <video src={video.url} controls/>
-            <p className='text-white'>{video.title}</p>
+            <video className='w-[90vw] rounded-md border border-white h-[450px] mx-auto mt-4' src={video.url} controls/>
+            <div className='text-white w-[90vw] mx-auto mt-4 bg-black border border-white p-4 rounded-md'>
+              <h1>{video.title}</h1>
+              <p className='text-gray-200'>
+                {video.description}
+              </p>
+            </div>
             {
                 userType==='STUDENT' &&
-                <Button variant='medium' text={` ${isSubscribed ? 'Unsubscribe ?' :'Subscribe'} `} onClick={isSubscribed ? Unsubscribe : subscribe}/>
+                <div className='text-white w-[90vw] mx-auto mt-4 bg-black border border-white p-4 rounded-md flex justify-between items-center'>
+                  <Link to={`/teacher/${teacher?._id}`}>
+                    <p>{teacher?.firstName} {' '} {teacher?.lastName}</p>
+                  </Link>
+                  <Button variant='medium' text={` ${isSubscribed ? 'Unsubscribe ?' :'Subscribe'} `} onClick={isSubscribed ? Unsubscribe : subscribe}/>
+                </div>
             }
         </div>
       }

@@ -1,6 +1,6 @@
 import Video from "../models/Video.js";
 import Course from "../models/Course.js";
-
+import Teacher from "../models/Teacher.js"
 const addVideo = async(req,res)=>{
     if (req.file) {
     try {
@@ -45,8 +45,9 @@ const getVideo = async(req,res)=>{
         }
 
         const course = await Course.findOne({_id:video.course});
+        const teacherDetail = await Teacher.findById(course.teacher);
         
-        return res.status(200).json({ message:"Video details sent" , video:video , teacherId: course.teacher })
+        return res.status(200).json({ message:"Video details sent" , video:video , teacherDetail: teacherDetail })
         
     } catch {
         res.status(500).json({ message: 'Error fetching video' });
