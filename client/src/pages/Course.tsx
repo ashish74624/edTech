@@ -42,7 +42,7 @@ export default function Course() {
   const [title,setTitle] = useState('');
   const [description,setDescription] = useState('')
   const [videos,setVideos] = useState<Videos[] | null>(null);
-
+  const [uploading,setUploading] = useState(false);
   
 
    const handleFileChange = async(event:React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +52,7 @@ export default function Course() {
   };
 
   const onSubmit = async(e:FormEvent<HTMLFormElement>) =>{
+    setUploading(true)
     e.preventDefault();
       const formData = new FormData();
       formData.append('file', file as File);
@@ -72,6 +73,7 @@ export default function Course() {
         } catch {
             toast.error("Some error");
         }
+        setUploading(false)
     }
   
   useEffect(()=>{
@@ -117,10 +119,9 @@ export default function Course() {
         </div>
          {
             showVideoForm &&
-            <form onSubmit={onSubmit} className="bg-black w-96 h-max border border-white rounded-md mx-auto flex flex-col items-center py-2 px-8" >
-              <h2 className="text-lg">Course detail</h2>
+            <form onSubmit={onSubmit} className="bg-black w-96 h-max border border-white rounded-md mx-auto flex flex-col items-center py-2 px-8 dark" >
+              <h2 className="text-lg">Video detail</h2>
               <div className='relative z-0 w-full mb-6 group'>
-                <input type="file" accept="video/*" onChange={handleFileChange}  />
                 <input type='text' name='title' onChange={(e)=>{setTitle(e.target.value)}} id='title' className='login-inputs peer' placeholder=' ' required />
                 <label htmlFor='title' className='login-labels'>Enter Title</label>
               </div>
@@ -128,7 +129,9 @@ export default function Course() {
                 <input type='text' name='description' id='description' onChange={(e)=>{setDescription(e.target.value)}} className='login-inputs peer' placeholder=' ' required />
                 <label htmlFor='description' className='login-labels'>Enter Description</label>
               </div>
-              <Button type='submit' variant='small' text='Submit'/>
+              <input accept="video/*" className="block mb-4 w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" onChange={handleFileChange} id="file_input" type="file"/>
+
+              <Button disabled={uploading} type='submit' variant='small' text={`${uploading?"uploading...":"Submit"}`}/>
             </form>
           }
         <div className='w-full h-full mt-4'>
