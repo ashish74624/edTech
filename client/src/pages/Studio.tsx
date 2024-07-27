@@ -9,23 +9,25 @@ import toast, { Toaster } from 'react-hot-toast';
 import convertToBase64 from "@/utils/base64";
 import { Link } from "react-router-dom";
 import {Course} from "../components/Types/types";
+import { useNavigate } from 'react-router-dom';
 
 const backend = import.meta.env.VITE_BACKEND;
 
 
 const schema = z.object({
-    title : z.string().min(8),
-    description : z.string().min(16)
+    title : z.string(),
+    description : z.string().min(8)
 })
 
 type FormFeild = z.infer<typeof schema> 
 
 export default function Studio() {
     const {userData} = useAuth();
+    const navigate = useNavigate();
     const [showForm,setShowForm] = useState(false);
     const [courses,setCourses] = useState<Course[] | null>(null);
     const [file,setFile] = useState<string | null>(null);
-    const { handleSubmit, register, formState:{errors}, setError } = useForm<FormFeild>({
+    const { handleSubmit, register, formState:{errors, isSubmitting}, setError } = useForm<FormFeild>({
         resolver : zodResolver(schema)
     });
 
@@ -55,6 +57,7 @@ export default function Studio() {
             const output = await res.json();
             if(res.ok){
                 toast.success(output.message);
+                navigate('');
             }else{
                 toast.error(output.message);
             }
@@ -105,7 +108,7 @@ export default function Studio() {
                             <input {...register('description')} type='text' name='description' id='description' className='login-inputs peer' placeholder=' ' required />
                             <label htmlFor='description' className='login-labels'>Enter Description</label>
                         </div>
-                        <Button variant="large" text="Submit"/>
+                        <Button disabled={isSubmitting} variant="large" text={isSubmitting?"Loading...":"Submit"}/>
                         {errors.root && <div className='text-red-500 text-sm'>{errors.root?.message}</div>}
                         {errors.title && <div className='text-red-500 text-sm '>{errors.title?.message}</div>}
                         {errors.description && <div className='text-red-500 text-sm'>{errors.description?.message}</div>}
