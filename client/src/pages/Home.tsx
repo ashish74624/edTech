@@ -4,11 +4,10 @@ import { Link } from "react-router-dom";
 import useAuth from "@/hooks/useAuth";
 import StudentSection from "@/components/Home/StudentSection";
 
-
 export default function Home() {
-  
   const { userType } = useAuth();
 
+  
   return (
     <main className="page-class">
       <Navbar />

@@ -37,7 +37,11 @@ export default function Login() {
           if(res.ok && output.userData ){
             localStorage.setItem('userDataToken',JSON.stringify(output.userData))
             localStorage.setItem('userTypeToken',output.userType)
-            navigate('/dashboard');
+            if(output.userType=='STUDENT'){
+                navigate('/dashboard');
+            }else{
+                navigate('/studio');
+            }
           }
         } catch  {
           console.log("Not done");

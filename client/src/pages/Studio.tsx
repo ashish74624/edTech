@@ -1,7 +1,6 @@
 import Button from "@/components/Global/Button";
 import Navbar from "@/components/Global/Navbar";
 import useAuth from "@/hooks/useAuth"
-import SideBar from "@/components/Studio/SideBar";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import z from 'zod'
@@ -81,7 +80,6 @@ export default function Studio() {
     <section className='page-class'>
         <Navbar/>
         <div className="flex w-full text-white">
-            <SideBar/>
             <div className="w-full ">
                 <div className="flex w-full justify-between px-8 py-2">
                     <h1 className="text-4xl h-max">
@@ -91,10 +89,15 @@ export default function Studio() {
                 </div>
                 {
                     showForm && 
-                    <form onSubmit={handleSubmit(onSubmit)} className="bg-black w-96 h-max border border-white rounded-md mx-auto flex flex-col items-center py-2 px-8">
+                    <form onSubmit={handleSubmit(onSubmit)} className="bg-black w-96 h-max border border-white rounded-md mx-auto flex flex-col items-center py-2 px-8 dark">
                         <h2 className="text-lg">Course detail</h2>
-                        <div className='relative z-0 w-full mb-6 group'>
-                            <input type="file" accept="image/*" onChange={handleImageSelect}  />
+                        
+                        <label className="block mb-2 text-sm w-full  text-white " htmlFor="file_input">
+                            Select Video
+                        </label>
+                        <input  accept="image/*"  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" onChange={handleImageSelect} id="file_input" type="file"/>
+                        <p className="mt-1 text-xs w-full text-gray-500 dark:text-gray-300" id="file_input_help">Images only</p>
+                        <div className='relative z-0 w-full mt-2 mb-6 group'>
                             <input {...register('title')} type='text' name='title' id='title' className='login-inputs peer' placeholder=' ' required />
                             <label htmlFor='title' className='login-labels'>Enter Title</label>
                         </div>
@@ -111,12 +114,12 @@ export default function Studio() {
                 {
                     courses && courses.length>0
                     ?
-                    <div>
+                    <div className="grid grid-cols-1 mt-8 md:grid-cols-2 xl:grid-cols-3 gap-4 w-max mx-auto">
                         {courses.map((item)=>(
                             <Link key={item._id} to={`/course/${item._id}`}>
-                            <div className="bg-blue-900 w-56 h-56 px-2 rounded-md" >
-                                <img className="w-full h-40" src={`https://res.cloudinary.com/dknsgexk8/image/upload/v1721739667/${item.thumbnail}`} alt={item.title}/>
-                                <p>
+                            <div className="bg-black w-96 h-max rounded-md overflow-hidden border border-white" >
+                                <img className="w-full h-56 rounded-md" src={`https://res.cloudinary.com/dknsgexk8/image/upload/v1721739667/${item.thumbnail}`} alt={item.title}/>
+                                <p className="m-4">
                                     {item.title}
                                 </p>
                             </div>
