@@ -100,27 +100,22 @@ export default function Course() {
   },[params])
 
   return (
-    <section className='page-class'>
+    <section className='page-class text-white'>
       <Navbar/>
-      {params.courseId}
-      <div className='text-white px-8'>
-        <h1>{course?.title}</h1>
-        <div className='w-full h-full'>
+      <div className='px-8 mt-4'>
+        <div className='flex justify-between items-center'>
+          <div className='w-max'>
+            <h1 className='text-6xl'>{course?.title}</h1>
+            <p className='text-lg text-gray-200 mt-2'>{course?.description}</p>
+          </div>
           {
-            course && course.videos.length>0 
-            ?
-            <p>Here the videos of the following course</p>
-            :
-            userType==="TEACHER" 
-            ?
+            userType ==='TEACHER' &&
             <div>
-              Your course does not have any videos
               <Button onClick={()=>{setShowVideoForm(!showVideoForm)}} variant="medium" text='Add Videos' />
             </div>
-            :
-            <p>This course does not have any videos</p>
           }
-          {
+        </div>
+         {
             showVideoForm &&
             <form onSubmit={onSubmit} className="bg-black w-96 h-max border border-white rounded-md mx-auto flex flex-col items-center py-2 px-8" >
               <h2 className="text-lg">Course detail</h2>
@@ -136,16 +131,38 @@ export default function Course() {
               <Button type='submit' variant='small' text='Submit'/>
             </form>
           }
+        <div className='w-full h-full mt-4'>
+          {
+            course && course.videos.length>0 
+            ?
+            <p>Here the videos of the following course :</p>
+            :
+            userType==="TEACHER" 
+            ?
+            <div className='w-max mx-auto'>
+              Your course does not have any videos
+            </div>
+            :
+            <p className='w-max mx-auto'>This course does not have any videos</p>
+          }
+         
           {
             videos &&
-            videos.map((item)=>(
-              <div key={item.title}>
-                <video src={item.url} />
-                <Link to={`/watch/${item._id}`}>
-                  {item.title}
-                </Link>
-              </div>
-            ))
+            <div className='grid grid-cols-1 mt-8 md:grid-cols-2 xl:grid-cols-3 gap-4 w-max mx-auto'>
+            {
+
+              videos.map((item)=>(
+                <Link  key={item._id} to={`/watch/${item._id}`}>
+                <div className="bg-black w-96 h-max rounded-md flex flex-col items-center overflow-hidden border border-white">
+                  <video src={item.url} />
+                  <p className='m-2'>
+                    {item.title}
+                  </p>
+                </div>
+                  </Link>
+              ))
+            }
+            </div>
           }
         </div>
       </div>
