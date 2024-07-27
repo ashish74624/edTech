@@ -10,6 +10,7 @@ import convertToBase64 from "@/utils/base64";
 import { Link } from "react-router-dom";
 import {Course} from "../components/Types/types";
 import { useNavigate } from 'react-router-dom';
+import Grid from "@/components/Skels/Grid";
 
 const backend = import.meta.env.VITE_BACKEND;
 
@@ -25,6 +26,7 @@ export default function Studio() {
     const {userData} = useAuth();
     const navigate = useNavigate();
     const [showForm,setShowForm] = useState(false);
+    const [fetchingCourses,setFetchingCourses] = useState(true);
     const [courses,setCourses] = useState<Course[] | null>(null);
     const [file,setFile] = useState<string | null>(null);
     const { handleSubmit, register, formState:{errors, isSubmitting}, setError } = useForm<FormFeild>({
@@ -74,7 +76,10 @@ export default function Studio() {
             const res = await fetch(`${backend}/api/course/getCourses/${userData?._id}`);
             const data = await res.json();
             console.log(data.courses)
-            setCourses(data.courses);
+            if(res.ok){
+                setCourses(data.courses);
+            }
+            setFetchingCourses(false)
         }
         getCourses();
     },[userData])
@@ -115,12 +120,16 @@ export default function Studio() {
                     </form>
                 }
                 {
+                    fetchingCourses 
+                    ?
+                    <Grid/>
+                    :
                     courses && courses.length>0
                     ?
                     <div className="grid grid-cols-1 mt-8 md:grid-cols-2 xl:grid-cols-3 gap-4 w-max mx-auto">
                         {courses.map((item)=>(
                             <Link key={item._id} to={`/course/${item._id}`}>
-                            <div className="bg-black w-96 h-max rounded-md overflow-hidden border border-white" >
+                            <div className="bg-black w-96 max-h-72 h-max rounded-md overflow-hidden border border-white" >
                                 <img className="w-full h-56 rounded-md" src={`https://res.cloudinary.com/dknsgexk8/image/upload/v1721739667/${item.thumbnail}`} alt={item.title}/>
                                 <p className="m-4">
                                     {item.title}
@@ -131,6 +140,7 @@ export default function Studio() {
                     </div>
                     :
                     <div>You don't have any courses</div>
+                    
                 }
             </div>
         </div>
