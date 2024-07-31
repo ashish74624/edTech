@@ -86,6 +86,9 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
          "meteor-effect": "meteor 5s linear infinite",
       },
+      fontFamily: {
+        Lobster: ["Lobster", "sans-serif"],
+      },
     },
   },
   plugins: [tailwindcssAnimate, addVariablesForColors],

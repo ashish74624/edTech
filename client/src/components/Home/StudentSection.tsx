@@ -103,8 +103,8 @@ export default function StudentSection() {
             subscriptions.map((item,i)=>(
                 <Link to={`/teacher/${item._id}`} key={i}>
                     <div className="bg-black border border-white px-8 py-2 rounded-md">
-                        <p className="text-xl">{item.firstName} {" "} {item.lastName}</p>
-                        <p>{item.email}</p>
+                        <p className="text-xl text-teal w-max mx-auto">{item.firstName} {" "} {item.lastName}</p>
+                        <p className="w-max mx-auto">{item.email}</p>
                     </div>
                 </Link>
             ))
