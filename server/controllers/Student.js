@@ -9,6 +9,10 @@ const subscribe = async(req,res)=>{
             return res.status(404).json({message:"Student not found"});
         }
 
+        if(student.subscriptions.includes(req.body.teacherId)){
+            return res.status(409).json({message:"Subscription already added"})
+        }
+
         const update = await Student.updateOne({_id:req.body.studentId},{
             $push :{ subscriptions: req.body.teacherId }
         })
@@ -60,4 +64,18 @@ const mySubscriptions = async(req,res)=>{
     }
 }
 
-export { subscribe, Unsubscribe, mySubscriptions }
+const getSubInfo = async(req,res)=>{
+    try {
+        const student = await Student.findById(req.params.studentId);
+
+        if(student.subscriptions.includes(req.params.teacherId)){
+            return res.status(200).json({message:"Subscription already added", isSubscribed:true})
+        }else{
+            return res.status(200).json({message:"Subscription not added", isSubscribed:false})
+        }
+    } catch (error) {
+        return res.status(500).json({message:"Can't get subscriptions at the moment"})
+    }
+}
+
+export { subscribe, Unsubscribe, mySubscriptions, getSubInfo }

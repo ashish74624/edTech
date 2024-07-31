@@ -17,7 +17,7 @@ const backend = import.meta.env.VITE_BACKEND;
 
 const schema = z.object({
     title : z.string(),
-    description : z.string().min(8)
+    description : z.string()
 })
 
 type FormFeild = z.infer<typeof schema> 
@@ -101,7 +101,7 @@ export default function Studio() {
                         <h2 className="text-lg">Course detail</h2>
                         
                         <label className="block mb-2 text-sm w-full  text-white " htmlFor="file_input">
-                            Select Video
+                            Select Thumbnail
                         </label>
                         <input  accept="image/*"  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" onChange={handleImageSelect} id="file_input" type="file"/>
                         <p className="mt-1 text-xs w-full text-gray-500 dark:text-gray-300" id="file_input_help">Images only</p>
@@ -139,7 +139,7 @@ export default function Studio() {
                         ))}
                     </div>
                     :
-                    <div>You don't have any courses</div>
+                    <div className="w-max mx-auto">You don't have any courses</div>
                     
                 }
             </div>

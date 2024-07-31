@@ -1,5 +1,5 @@
 import useAuth from "../../hooks/useAuth";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +21,9 @@ export default function Navbar() {
   }
   return (
     <nav className=' w-screen text-white bg-teal flex justify-between items-center px-8 py-2'>
-      <h1 className="text-lg font-Lobster">InspireEdTech</h1>
+      <Link to={userType==="TEACHER"?'/studio':'/dashboard'}>
+        <h1 className="text-lg font-Lobster">InspireEdTech</h1>
+      </Link>
       <DropdownMenu>
         <DropdownMenuTrigger className="border border-white px-4 py-1 rounded-full">
           {userData?.firstName} {' '} {userData?.lastName}

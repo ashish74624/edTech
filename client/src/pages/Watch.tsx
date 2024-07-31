@@ -2,8 +2,8 @@ import Navbar from '@/components/Global/Navbar';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom'
 import { Videos } from '@/components/Types/types';
-import Button from '@/components/Global/Button';
 import useAuth from '@/hooks/useAuth';
+import SubscribeButton from '@/components/Watch/SubscribeButton';
 
 const backend = import.meta.env.VITE_BACKEND;
 
@@ -21,61 +21,20 @@ export default function Watch() {
   const { userType, userData } =   useAuth();
   const [video,setVideo] =  useState<Videos | null >(null);
   const [teacher,setTeacher] =  useState<Teacher|null>(null);
-  const [isSubscribed,setIsSubscribed] = useState(false);
   const params = useParams<{videoId:string}>();
-
-
-  const subscribe = async()=>{
-    const res = await fetch(`${backend}/api/student/subscribe`,{
-        method:'PUT',
-        headers:{
-            'Content-type':'application/json'
-        },
-        body: JSON.stringify({
-            studentId : userData?._id,
-            teacherId: teacher?._id
-        })
-    })
-    if(res.ok){
-        setIsSubscribed(true)
-    }
-  }
-
-  const Unsubscribe = async () => {
-    const res = await fetch(`${backend}/api/student/unSubscribe`,{
-        method :'PUT',
-        headers:{
-            'Content-type':'application/json'
-        },
-        body: JSON.stringify({
-            studentId : userData?._id,
-            teacherId: teacher?._id
-        })
-    })
-    if(res.ok){
-        setIsSubscribed(false)
-    }
-  }
 
   useEffect(()=>{
     const getVideo= async() =>{
-        const res = await fetch(`${backend}/api/video/getVideo/${params.videoId}`);
-        const data = await res.json();
-        if(res.ok && data.video){
-            setVideo(data.video)
-            setTeacher(data.teacherDetail)
-        }
+      const res = await fetch(`${backend}/api/video/getVideo/${params.videoId}`);
+      const data = await res.json();
+      if(res.ok && data.video){
+        setVideo(data.video)
+        setTeacher(data.teacherDetail)
+      }
     }
     void getVideo();
 
-    if(userData?.subscriptions?.includes(teacher?._id as string)){
-        setIsSubscribed(true)
-    }else{
-        console.log("here")
-        setIsSubscribed(false)
-    }
-
-  },[])
+  },[params.videoId])
 
   return (
     <section className='page-class'>
@@ -96,7 +55,10 @@ export default function Watch() {
                   <Link to={`/teacher/${teacher?._id}`}>
                     <p>{teacher?.firstName} {' '} {teacher?.lastName}</p>
                   </Link>
-                  <Button variant='medium' text={` ${isSubscribed ? 'Unsubscribe ?' :'Subscribe'} `} onClick={isSubscribed ? Unsubscribe : subscribe}/>
+                  {userData &&
+
+                  <SubscribeButton subscriptions={userData.subscriptions as string[]} teacherId={teacher?._id as string} studentId={userData._id}/>
+                  }
                 </div>
             }
         </div>
