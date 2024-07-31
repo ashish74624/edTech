@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 const schema = z.object({
   firstName: z.string(),
@@ -33,6 +34,10 @@ export default function SignUp() {
 
   const onSubmit: SubmitHandler<FormField> = async (data) => {
     console.log("Submitted data:", data); // Log the form data
+    if(userType.length<=0  ){
+      toast.error("Please select : Teacher or Student");
+      throw new Error("");
+    }
     try {
       const res = await fetch(`${backend}/api/register`, {
         method: 'POST',
@@ -44,10 +49,11 @@ export default function SignUp() {
           userType:userType
         })
       });
+      const output = await res.json(); 
       if (res.ok) {
         navigate('/login');
       } else {
-        console.error("Error in registration", await res.json());
+        toast.error(output.message); 
       }
     } catch (error) {
       console.error("Error during registration", error);
@@ -63,7 +69,7 @@ export default function SignUp() {
       {/* Form */}
       <section className='h-[80vh] xl:h-screen w-screen xl:w-[50vw] flex flex-col justify-center items-center xl:grid xl:place-content-center bg-zinc-900'>
         <div className="flex xl:hidden items-center w-full flex-col mb-4">
-          <h1 className="text-teal text-5xl">LOGO</h1>
+          <h1 className="text-teal text-5xl font-Lobster">InspireEdTech</h1>
           <h3 className="text-2xl">Great to see you again!</h3>
           <h3 className="">Log in to continue where you left off</h3>
         </div>
@@ -110,6 +116,7 @@ export default function SignUp() {
           <p className='text-black text-xs mt-4 dark:text-white'>Already have an account? <Link to={'/login'}><span className='text-xs text-teal hover:underline pl-1'>Login</span></Link> </p>
         </div>
       </section>
+      <Toaster/>
     </main>
   );
 }
